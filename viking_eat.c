@@ -31,7 +31,7 @@ static void v_eating(t_viking *viking)
 bool    check_eaten(t_viking *viking)
 {
     pthread_mutex_lock(&viking->table->nbr_lock);
-    if (viking->meals_eaten >= viking->table->nbr_of_meals)
+    if (viking->table->nbr_of_meals != -1 && viking->meals_eaten >= viking->table->nbr_of_meals)
     {
         pthread_mutex_unlock(&viking->table->nbr_lock);
         return (true);

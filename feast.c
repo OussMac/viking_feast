@@ -25,7 +25,7 @@ void    *viking_cycle(void *arg)
     return (NULL);
 }
 
-void    *watcher(void *arg)
+void    *ragnar_monitor(void *arg)
 {
     t_table *table;
     int     i;
@@ -36,6 +36,14 @@ void    *watcher(void *arg)
         i = 0;
         while(i < table->viking_number)
         {
+
+            if ((get_time(table) - table->vikings[i].last_meal) >= table->time_to_die)
+            {
+                set_end_flag(table);
+                print_action(&table->vikings[i], "died");
+                return (NULL);
+            }
+
             // for each philosopher p in philos[]:
         //     lock(p->m_time)
         //         now = current_timestamp()
@@ -49,9 +57,10 @@ void    *watcher(void *arg)
         //         }
         //     unlock(p->m_time)
 
-        // usleep(short_interval)  // avoid busy-spin
             i++;
+            usleep(10);
         }
+        usleep(800);
     }
     return (NULL);
 }
@@ -69,7 +78,7 @@ int valhala_feast(t_table *table)
         i++;
     }
     i = 0;
-    pthread_create(&ragnar, NULL, watcher, table);
+    pthread_create(&ragnar, NULL, ragnar_monitor, table);
     pthread_detach(ragnar);
     while (i < viking_nbr)
         pthread_join(table->vikings[i++].th_id, NULL);
