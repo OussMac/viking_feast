@@ -86,7 +86,7 @@ void    free_data(t_table *table);
 void    clean_up(t_table *table);
 
 // Start scenario
-int     start_scenario(t_table *table);
+int     valhala_feast(t_table *table);
 void    *viking_cycle(void *arg);
 
 // Check end_sim flag
