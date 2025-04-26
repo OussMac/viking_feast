@@ -46,7 +46,8 @@ int allocate_data(t_table *table)
         || pthread_mutex_init(&table->write_lock, NULL) != 0 
         || pthread_mutex_init(&table->nbr_lock, NULL) != 0 
         || pthread_mutex_init(&table->sleep_lock, NULL) != 0 
-        || pthread_mutex_init(&table->forks_lock, NULL) != 0)
+        || pthread_mutex_init(&table->forks_lock, NULL) != 0 
+        || pthread_mutex_init(&table->full_lock, NULL) != 0)
         return(free(table->forks), free(table->vikings), EXIT_FAILURE);
     return(EXIT_SUCCESS);
 }

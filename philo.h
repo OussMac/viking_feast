@@ -71,6 +71,7 @@ typedef struct s_table
     pthread_mutex_t nbr_lock;
     pthread_mutex_t sleep_lock;
     pthread_mutex_t forks_lock;
+    pthread_mutex_t full_lock;
 } t_table;
 
 // parsing and input.
@@ -102,6 +103,7 @@ void    viking_think(t_viking *viking);
 
 // Ragnar utils
 void    set_end_flag(t_table *table);
+void    full_vikings(t_table *table);
 
 // Check end_sim flag
 bool    end_feast(t_table *table);
