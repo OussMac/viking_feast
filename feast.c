@@ -41,6 +41,8 @@ void    *ragnar_monitor(void *arg)
             {
                 set_end_flag(table);
                 print_action(RED, &table->vikings[i], "died");
+                if (table->viking_number == 1)
+                    pthread_detach(table->vikings->th_id);
                 return (NULL);
             }
             i++;
@@ -65,8 +67,8 @@ int valhala_feast(t_table *table)
     }
     i = 0;
     pthread_create(&ragnar, NULL, ragnar_monitor, table);
-    pthread_detach(ragnar);
-    while (i < viking_nbr)
+    pthread_join(ragnar, NULL);
+    while (i < viking_nbr && viking_nbr != 1)
         pthread_join(table->vikings[i++].th_id, NULL);
     return (EXIT_SUCCESS);
 }
