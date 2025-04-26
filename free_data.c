@@ -42,7 +42,7 @@ void    clean_up(t_table *table)
     // destroy_forks(table);
     free_data(table);
     pthread_mutex_destroy(&table->print_lock);
-    pthread_mutex_destroy(&table->death_lock);
+    pthread_mutex_destroy(&table->end_lock);
     pthread_mutex_destroy(&table->eat_lock);
     pthread_mutex_destroy(&table->write_lock);
     pthread_mutex_destroy(&table->nbr_lock);

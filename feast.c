@@ -5,49 +5,21 @@ void    *viking_cycle(void *arg)
     t_viking *viking;
     
     viking = (t_viking *) arg;
+    if (viking->viking_id % 2 == 0)
+        ft_usleep(viking->table->time_to_eat / 10);
     while (true)
     {
-       // [STOP CHECK]
-        // lock(m_stop)
-        // if (global stop flag is set) {
-        //     unlock(m_stop)
-        //     break out of loop and exit thread
-        // }
-        // unlock(m_stop)
+        if (end_feast(viking->table))
+            break;
 
-        // [TAKE FORKS]
-        // lock(left_fork)
-        // print_timestamped("has taken a fork")
-        // lock(right_fork)
-        // print_timestamped("has taken a fork")
+        viking_eat(viking);
 
-        // [EAT]
-        // lock(m_time)
-        //   last_meal = current_timestamp()
-        // unlock(m_time)
-        // print_timestamped("is eating")
-        // usleep(t_eat)
-        // unlock(left_fork)
-        // unlock(right_fork)
+        if (check_eaten(viking))
+            break;
 
-        // [MEAL COUNT & TERMINATION]
-        // increment personal_eat_count
-        // if (personal_eat_count == required_eats) {
-        //     lock(m_stop)
-        //       increment(global_finished_count)
-        //       if (global_finished_count == n_philo) {
-        //           set global stop flag
-        //       }
-        //     unlock(m_stop)
-        //     break out of loop and exit thread
-        // }
+       viking_sleep(viking);
 
-        // [SLEEP]
-        // print_timestamped("is sleeping")
-        // usleep(t_sleep)
-
-        // [THINK]
-        // print_timestamped("is thinking")
+       viking_think(viking);
 
     }
     return (NULL);

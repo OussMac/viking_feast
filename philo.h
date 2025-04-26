@@ -65,7 +65,7 @@ typedef struct s_table
     t_viking *vikings;
 
     pthread_mutex_t print_lock;
-    pthread_mutex_t death_lock;
+    pthread_mutex_t end_lock;
     pthread_mutex_t eat_lock;
     pthread_mutex_t write_lock;
     pthread_mutex_t nbr_lock;
@@ -85,16 +85,30 @@ int     stack_data(t_table *table);
 void    free_data(t_table *table);
 void    clean_up(t_table *table);
 
+// Scenario utils
+void    print_action(t_viking *viking, char *action);
+
 // Start scenario
 int     valhala_feast(t_table *table);
 void    *viking_cycle(void *arg);
 
-// Check end_sim flag
-bool    end_sim(t_table *table);
+// Eating.
+void    viking_eat(t_viking *viking);
+bool    check_eaten(t_viking *viking);
 
-// time
+// Sleeping && Eeating
+void    viking_sleep(t_viking *viking);
+void    viking_think(t_viking *viking);
+
+// Check end_sim flag
+bool    end_feast(t_table *table);
+
+// Get time in Miliseconds.
 long    m_time(void);
+// Time since start (ms).
 long    get_time(t_table *table); // time since start
+// usleep in miliseconds
+void    ft_usleep(long miliseconds);
 
 // error handling
 void    print_error(char *error);
