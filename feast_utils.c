@@ -1,9 +1,9 @@
 #include "philo.h"
 
-void    print_action(t_viking *viking, char *action)
+void    print_action(char *color, t_viking *viking, char *action)
 {
     pthread_mutex_lock(&viking->table->print_lock);
-    printf("%ld %d %s\n", get_time(viking->table), viking->viking_id, action);
+    printf("%s%ld %d %s\n"RST,color , get_time(viking->table), viking->viking_id, action);
     pthread_mutex_unlock(&viking->table->print_lock);
 }
 

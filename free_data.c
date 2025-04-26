@@ -16,7 +16,7 @@ void    print_error(char *error)
 
 void    print_comm(char *comment)
 {
-    printf(ORN"[*] %s"RST, comment);
+    printf(YLW"[*] %s"RST, comment);
 }
 
 void    free_data(t_table *table)

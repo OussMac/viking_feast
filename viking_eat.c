@@ -3,14 +3,14 @@
 static void pick_up_forks(t_viking *viking)
 {
     pthread_mutex_lock(&viking->left_fork->fork);
-    print_action(viking, "has taken a fork");
+    print_action(MGN, viking, "has taken a fork");
     pthread_mutex_lock(&viking->right_fork->fork);
-    print_action(viking, "has taken a fork");
+    print_action(CYN, viking, "has taken a fork");
 }
 
 static void v_eating(t_viking *viking)
 {
-    print_action(viking, "is eating");
+    print_action(GRN, viking, "is eating");
 
     // sleep the amount of eating
     ft_usleep(viking->table->time_to_eat);

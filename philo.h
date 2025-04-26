@@ -12,11 +12,11 @@
 // text colors
 # define RED "\e[31m"
 # define GRN "\e[32m"
-# define RST "\e[97m"
-# define ORN "\e[33m"
 # define BLU "\e[34m"
 # define YLW "\e[33m"
 # define MGN "\e[35m"
+# define CYN "\e[36m"
+# define RST "\e[97m"
 
 // # define gettimeofday(...) -1
 // # define malloc(...) NULL
@@ -86,7 +86,7 @@ void    free_data(t_table *table);
 void    clean_up(t_table *table);
 
 // Scenario utils
-void    print_action(t_viking *viking, char *action);
+void    print_action(char *color, t_viking *viking, char *action);
 
 // Start scenario
 int     valhala_feast(t_table *table);

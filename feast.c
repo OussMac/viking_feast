@@ -40,7 +40,7 @@ void    *ragnar_monitor(void *arg)
             if ((get_time(table) - table->vikings[i].last_meal) >= table->time_to_die)
             {
                 set_end_flag(table);
-                print_action(&table->vikings[i], "died");
+                print_action(RED, &table->vikings[i], "died");
                 return (NULL);
             }
             i++;
