@@ -43,20 +43,6 @@ void    *ragnar_monitor(void *arg)
                 print_action(&table->vikings[i], "died");
                 return (NULL);
             }
-
-            // for each philosopher p in philos[]:
-        //     lock(p->m_time)
-        //         now = current_timestamp()
-        //         if (now - p->last_meal > t_die) {
-        //             lock(info->m_stop)
-        //               set global stop flag
-        //             unlock(info->m_stop)
-        //             print_timestamped(p, "died")
-        //             unlock(p->m_time)
-        //             return NULL  // end watcher
-        //         }
-        //     unlock(p->m_time)
-
             i++;
             usleep(10);
         }
