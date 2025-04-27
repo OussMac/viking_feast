@@ -18,6 +18,8 @@
 # define CYN "\e[36m"
 # define RST "\e[97m"
 
+# define ⵎⴰⵉⵏ main
+
 // # define gettimeofday(...) -1
 // # define malloc(...) NULL
 // # define pthread_mutex_init(...) 1
@@ -104,6 +106,8 @@ void    viking_think(t_viking *viking);
 // Ragnar utils
 void    set_end_flag(t_table *table);
 void    full_vikings(t_table *table);
+int     check_viking_nbr(t_table *table);
+long    get_last_meal(t_table *table, int i);
 
 // Check end_sim flag
 bool    end_feast(t_table *table);

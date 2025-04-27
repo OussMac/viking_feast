@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int main(int argc, char *argv[])
+int ⵎⴰⵉⵏ(int argc, char *argv[])
 {
 	t_table	table;
 

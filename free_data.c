@@ -1,11 +1,25 @@
 #include "philo.h"
 
+void    ft_putstr_fd(char *str, int fd)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        write(fd, &str[i], 1);
+        i++;
+    }
+
+}
+
 void    print_error(char *error)
 {
     int i;
 
     i = 0;
-    printf(RED"[-] ");
+
+    write(STDOUT_FILENO, "[-]", 3);
     while (error[i])
     {
         write(STDOUT_FILENO, &error[i], 1);
@@ -16,7 +30,7 @@ void    print_error(char *error)
 
 void    print_comm(char *comment)
 {
-    printf(YLW"[*] %s"RST, comment);
+    printf(YLW"[*] %s\n"RST, comment);
 }
 
 void    free_data(t_table *table)
