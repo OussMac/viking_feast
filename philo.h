@@ -18,8 +18,6 @@
 # define CYN "\e[36m"
 # define RST "\e[97m"
 
-# define ⵎⴰⵉⵏ main
-
 // # define gettimeofday(...) -1
 // # define malloc(...) NULL
 // # define pthread_mutex_init(...) 1
@@ -117,7 +115,7 @@ long    m_time(void);
 // Time since start (ms).
 long    get_time(t_table *table); // time since start
 // usleep in miliseconds
-void    ft_usleep(long miliseconds);
+void    ft_usleep(long miliseconds, t_table *table);
 
 // error handling
 void    print_error(char *error);

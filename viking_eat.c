@@ -39,7 +39,7 @@ static void v_eating(t_viking *viking)
     print_action(GRN, viking, "is eating");
 
     // sleep the amount of eating
-    ft_usleep(viking->table->time_to_eat);
+    ft_usleep(viking->table->time_to_eat, viking->table);
     
     // set last meal time
     pthread_mutex_lock(&viking->table->eat_lock);

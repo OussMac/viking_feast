@@ -6,7 +6,7 @@ void    *viking_cycle(void *arg)
     
     viking = (t_viking *) arg;
     if (viking->viking_id % 2 == 0)
-        ft_usleep(viking->table->time_to_eat / 10);
+        ft_usleep(viking->table->time_to_eat / 10, viking->table);
     if (viking->table->viking_number == 1)
     {
         print_action(MGN, viking, "has taken a fork");
@@ -47,7 +47,7 @@ void    *ragnar_monitor(void *arg)
             i++;
         }
         full_vikings(table);
-        ft_usleep(8);
+        ft_usleep(8, table);
     }
     return (NULL);
 }

@@ -3,22 +3,26 @@
 void    print_action(char *color, t_viking *viking, char *action)
 {
     pthread_mutex_lock(&viking->table->print_lock);
-     if (end_feast(viking->table))
-     {
+    if (end_feast(viking->table))
+    {
         pthread_mutex_unlock(&viking->table->print_lock);
         return ;
-     }
+    }
     printf("%s%ld %d %s\n"RST,color , get_time(viking->table), viking->viking_id, action);
     pthread_mutex_unlock(&viking->table->print_lock);
 }
 
-void    ft_usleep(long miliseconds)
+void    ft_usleep(long miliseconds, t_table *table)
 {
     long    start_time;
 
     start_time = m_time();
     while ((m_time() - start_time) < miliseconds)
+    {
+        if (end_feast(table))  
+            return ;
         usleep(100);
+    }
 }
 
 bool    end_feast(t_table *table)
