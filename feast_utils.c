@@ -1,9 +1,27 @@
 #include "philo.h"
-#include "string.h"
+
+static int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (1);
+	while (i < n && (s1[i] && s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	if (i < n)
+		return (s1[i] - s2[i]);
+	return (0);
+}
+
 void    print_action(char *color, t_viking *viking, char *action)
 {
     pthread_mutex_lock(&viking->table->print_lock);
-    if (end_feast(viking->table) && strcmp(action , "died") != 0)
+    if (end_feast(viking->table) && ft_strncmp(action , "died", 4) != 0)
     {
         pthread_mutex_unlock(&viking->table->print_lock);
         return ;
