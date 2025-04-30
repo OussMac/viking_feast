@@ -1,9 +1,9 @@
 #include "philo.h"
-
+#include "string.h"
 void    print_action(char *color, t_viking *viking, char *action)
 {
     pthread_mutex_lock(&viking->table->print_lock);
-    if (end_feast(viking->table))
+    if (end_feast(viking->table) && strcmp(action , "died") != 0)
     {
         pthread_mutex_unlock(&viking->table->print_lock);
         return ;

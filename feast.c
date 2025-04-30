@@ -19,7 +19,11 @@ void    *viking_cycle(void *arg)
         viking_eat(viking);
         if (check_eaten(viking))
             break;
+        if (end_feast(viking->table))
+            break;
         viking_sleep(viking);
+        if (end_feast(viking->table))
+            break;
         viking_think(viking);
     }
     return (NULL);
@@ -40,14 +44,14 @@ void    *ragnar_monitor(void *arg)
         {
             if ((get_time(table) - get_last_meal(table, i)) >= table->time_to_die)
             {
-                print_action(RED, &table->vikings[i], "died");
                 set_end_flag(table);
+                print_action(RED, &table->vikings[i], "died");
                 return (NULL);
             }
             i++;
         }
         full_vikings(table);
-        ft_usleep(8, table);
+        ft_usleep(5, table);
     }
     return (NULL);
 }
