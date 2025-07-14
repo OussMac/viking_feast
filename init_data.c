@@ -24,7 +24,7 @@ long    m_time(void)
     struct timeval tv;
     if(gettimeofday(&tv, NULL) != 0)
         return (print_error("Failed To Get Time.\n"), -1);
-    return(tv.tv_sec * 1000L + tv.tv_usec / 1000L);
+    return(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 long    get_time(t_table *table)
@@ -48,7 +48,7 @@ int allocate_data(t_table *table)
         || pthread_mutex_init(&table->sleep_lock, NULL) != 0 
         || pthread_mutex_init(&table->forks_lock, NULL) != 0 
         || pthread_mutex_init(&table->full_lock, NULL) != 0)
-        return(free(table->forks), free(table->vikings), EXIT_FAILURE);
+        return(free(table->forks), free(table->vikings), print_error("Failed To Init Mutex.\n"), EXIT_FAILURE);
     return(EXIT_SUCCESS);
 }
 

@@ -18,19 +18,17 @@ void    print_error(char *error)
     int i;
 
     i = 0;
-
     write(STDOUT_FILENO, "[-]", 3);
     while (error[i])
     {
         write(STDOUT_FILENO, &error[i], 1);
         i++;
     }
-    printf(RST"\n");
 }
 
 void    print_comm(char *comment)
 {
-    printf(YLW"[*] %s\n"RST, comment);
+    printf("[*] %s\n", comment);
 }
 
 void    free_data(t_table *table)
@@ -46,14 +44,14 @@ void    destroy_forks(t_table *table)
     i = 0;
     while (i < table->viking_number)
     {
-        pthread_mutex_destroy(&table->forks->fork + i);
+        pthread_mutex_destroy(&table->forks[i].fork);
         i++;
     }
 }
 
 void    clean_up(t_table *table)
 {
-    // destroy_forks(table);
+    destroy_forks(table);
     free_data(table);
     pthread_mutex_destroy(&table->print_lock);
     pthread_mutex_destroy(&table->end_lock);

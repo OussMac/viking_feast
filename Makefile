@@ -1,5 +1,5 @@
 FLAGS = -Wall -Werror -Wextra 
-SANITIZE = -fsanitize=thread -g
+SANITIZE = #-fsanitize=thread -g
 HEADER = philo.h
 CC = cc
 NAME = philo
@@ -26,10 +26,3 @@ clean:
 re: fclean all
 
 .PHONY: clean
-
-# test: h t a
-# 	@echo $^
-
-# h:
-# t:
-# a:`
