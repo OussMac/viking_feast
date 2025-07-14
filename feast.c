@@ -40,7 +40,7 @@ void    *ragnar_monitor(void *arg)
         i = 0;
         if (end_feast(table))
             return (NULL);
-        while(i < check_viking_nbr(table))
+        while(i <= check_viking_nbr(table))
         {
             if ((get_time(table) - get_last_meal(table, i)) >= table->time_to_die)
             {
