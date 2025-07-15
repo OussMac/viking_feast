@@ -18,7 +18,7 @@ static int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-void    print_action(char *color, t_viking *viking, char *action)
+void    print_action(t_viking *viking, char *action)
 {
     pthread_mutex_lock(&viking->table->print_lock);
     if (end_feast(viking->table) && ft_strncmp(action , "died", 4) != 0)
@@ -26,7 +26,7 @@ void    print_action(char *color, t_viking *viking, char *action)
         pthread_mutex_unlock(&viking->table->print_lock);
         return ;
     }
-    printf("%s%ld %d %s\n"RST,color , get_time(viking->table), viking->viking_id, action);
+    printf("%ld %d %s"RST"\n", get_time(viking->table), viking->viking_id, action);
     pthread_mutex_unlock(&viking->table->print_lock);
 }
 

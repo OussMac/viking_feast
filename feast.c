@@ -1,5 +1,14 @@
 #include "philo.h"
 
+void    join_threads(t_table *table, int viking_nbr)
+{
+    int i;
+
+    i = 0;
+    while (i < viking_nbr)
+        pthread_join(table->vikings[i++].th_id, NULL);
+}
+
 void    *viking_cycle(void *arg)
 {
     t_viking *viking;
@@ -9,7 +18,7 @@ void    *viking_cycle(void *arg)
         ft_usleep(viking->table->time_to_eat / 10, viking->table);
     if (viking->table->viking_number == 1)
     {
-        print_action(MGN, viking, "has taken a fork");
+        print_action(viking, "has taken a fork");
         return (NULL);
     }
     while (true)
@@ -45,7 +54,7 @@ void    *ragnar_monitor(void *arg)
             if ((get_time(table) - get_last_meal(table, i)) >= table->time_to_die)
             {
                 set_end_flag(table);
-                print_action(RED, &table->vikings[i], "died");
+                print_action(&table->vikings[i], "died");
                 return (NULL);
             }
             i++;
@@ -59,19 +68,26 @@ void    *ragnar_monitor(void *arg)
 int valhala_feast(t_table *table)
 {
     int i;
+    int j;
     pthread_t    ragnar;
 
     i = 0;
     int viking_nbr = table->viking_number;
     while (i < viking_nbr)
     {
-        pthread_create(&table->vikings[i].th_id, NULL, viking_cycle, &table->vikings[i]);
+        if (pthread_create(&table->vikings[i].th_id, NULL, viking_cycle, &table->vikings[i]) != 0)
+        {
+            j = 0;
+            set_end_flag(table);
+            while (j < i)
+                pthread_join(table->vikings[j++].th_id, NULL);
+            return (EXIT_FAILURE);
+        }
         i++;
     }
-    i = 0;
-    pthread_create(&ragnar, NULL, ragnar_monitor, table);
+    if (pthread_create(&ragnar, NULL, ragnar_monitor, table) != 0)
+        return (set_end_flag(table), join_threads(table, viking_nbr), EXIT_FAILURE);
     pthread_join(ragnar, NULL);
-    while (i < viking_nbr)
-        pthread_join(table->vikings[i++].th_id, NULL);
+    join_threads(table, viking_nbr);
     return (EXIT_SUCCESS);
 }

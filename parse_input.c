@@ -71,8 +71,7 @@ int parse_input(int argc, char *argv[], t_table *table)
     {
         if (syntax_parser(argv[i]))
             return (print_error("Invalid Number Syntax.\n"), EXIT_FAILURE);
-        nbr = ft_atol(argv[i]);
-		printf("==> %ld\n", nbr);
+		nbr = ft_atol(argv[i]);
         if (!(nbr >= INT_MIN && nbr <= INT_MAX) || nbr <= 0)
             return (print_error("Invalid Number Range.\n"), EXIT_FAILURE);
 		if (i == 1 && nbr > 200)

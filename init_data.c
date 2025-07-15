@@ -40,15 +40,9 @@ int allocate_data(t_table *table)
     table->forks = malloc(table->viking_number * sizeof(t_fork));
     if (!table->forks)
         return(free(table->vikings), EXIT_FAILURE);
-    if (pthread_mutex_init(&table->print_lock, NULL) != 0 
-        || pthread_mutex_init(&table->end_lock, NULL) != 0 
-        || pthread_mutex_init(&table->eat_lock, NULL) != 0 
-        || pthread_mutex_init(&table->write_lock, NULL) != 0 
-        || pthread_mutex_init(&table->nbr_lock, NULL) != 0 
-        || pthread_mutex_init(&table->sleep_lock, NULL) != 0 
-        || pthread_mutex_init(&table->forks_lock, NULL) != 0 
-        || pthread_mutex_init(&table->full_lock, NULL) != 0)
-        return(free(table->forks), free(table->vikings), print_error("Failed To Init Mutex.\n"), EXIT_FAILURE);
+    init_locks(table);
+    if (allocate_locks(table) != EXIT_SUCCESS)
+        return (free_data(table), clean_locks(table), EXIT_FAILURE);
     return(EXIT_SUCCESS);
 }
 
@@ -69,7 +63,12 @@ int init_table_data( t_table *table)
         // initing forks
         table->vikings[i].left_fork->fork_id = i;
         table->vikings[i].right_fork->fork_id = (i + 1) % table->viking_number;
-        pthread_mutex_init(&table->forks[i].fork, NULL);
+        if (pthread_mutex_init(&table->forks[i].fork, NULL) != 0)
+        {
+            while (--i >= 0)
+                pthread_mutex_destroy(&table->forks[i].fork);
+            return (free_data(table), clean_locks(table), EXIT_FAILURE);
+        }
         i++;
     }
     return(EXIT_SUCCESS);

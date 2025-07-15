@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	t_table	table;
 
-	atexit(f);
+	// atexit(f);
 
 	if (parse_input(argc, argv, &table) != EXIT_SUCCESS)
 		return(EXIT_FAILURE);
@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
 		return (print_error("Table Initalization Failed.\n"), EXIT_FAILURE);
 	// print_scene(&table);
 	if (valhala_feast(&table) != EXIT_SUCCESS)
-		return (print_error("Scenario Failed.\n"), EXIT_FAILURE);
-	clean_up(&table);
-	return(EXIT_SUCCESS);
+		return (clean_up(&table), print_error("Scenario Failed.\n"), EXIT_FAILURE);
+	return(clean_up(&table), EXIT_SUCCESS);
 }

@@ -22,6 +22,18 @@
 // # define malloc(...) NULL
 // # define pthread_mutex_init(...) 1
 
+typedef struct s_lock_flags
+{
+    bool    print_flag;
+    bool    end_flag;
+    bool    eat_flag;
+    bool    write_flag;
+    bool    nbr_flag;
+    bool    sleep_flag;
+    bool    forks_flag;
+    bool    full_flag;
+}   t_lock_flags;
+
 
 // Table type exists
 typedef struct s_table t_table;
@@ -72,6 +84,7 @@ typedef struct s_table
     pthread_mutex_t sleep_lock;
     pthread_mutex_t forks_lock;
     pthread_mutex_t full_lock;
+    t_lock_flags    flags;
 } t_table;
 
 // parsing and input.
@@ -82,12 +95,15 @@ long	ft_atol(const char *str);
 
 // allocate_data
 int     allocate_data(t_table *table);
+void    init_locks(t_table *table);
+int     allocate_locks(t_table *table);
 int     stack_data(t_table *table);
 void    free_data(t_table *table);
+void    clean_locks(t_table *table);
 void    clean_up(t_table *table);
 
 // Scenario utils
-void    print_action(char *color, t_viking *viking, char *action);
+void    print_action(t_viking *viking, char *action);
 
 // Start scenario
 int     valhala_feast(t_table *table);

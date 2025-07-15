@@ -16,7 +16,6 @@ static void print_table(t_table *table)
     printf(RST);
 }
 
-
 static void print_philos(t_table *table)
 {
     int i;
@@ -26,7 +25,7 @@ static void print_philos(t_table *table)
     {
         printf(BLU);
         printf("🧔🏼 Philo ID: %d\n", table->vikings[i].viking_id);
-        // printf("🧵 Thread ID: %lu\n", table->vikings[i].th_id);
+        // printf("🧵 Thread÷ ID: %lu\n", table->vikings[i].th_id);
         printf("🍲 Meals Eaten: %d\n", table->vikings[i].meals_eaten);
         printf("🥣 Last Meal: %ld\n", table->vikings[i].last_meal);
         printf(YLW"🥄 Left Fork: %d\n", table->vikings[i].left_fork->fork_id);
