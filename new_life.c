@@ -4,9 +4,15 @@ void    finished_meal(t_viking *viking, int *full_vikings, int nbr_of_meals)
 {
     int meals_eaten;
 
+    if (viking->full)
+        return ;
     meals_eaten = read_shared_int(&viking->table->meals_eaten_lock, &viking->meals_eaten);
     if (nbr_of_meals != -1 && meals_eaten >= nbr_of_meals)
+    {
         *full_vikings = *full_vikings + 1;
+        viking->full = true;
+    }
+    // printf(BLU"==> viking number [%d] --> full vikings = %d\n"RST, viking->viking_id, *full_vikings);
 }
 
 bool    starvation_check(t_viking *viking)
@@ -16,7 +22,7 @@ bool    starvation_check(t_viking *viking)
 
     last_meal = read_shared_long(&viking->table->last_meal_lock, &viking->last_meal);
     tm_since_lst_meal = get_time(viking->table);
-    if (tm_since_lst_meal >= viking->table->time_to_die)
+    if (tm_since_lst_meal - last_meal >= viking->table->time_to_die)
         return (true);
     return (false);
 }

@@ -60,6 +60,7 @@ int init_table_data( t_table *table)
         table->vikings[i].left_fork = &table->forks[i];
         table->vikings[i].right_fork = &table->forks[(i + 1) % table->viking_number];
         table->vikings[i].table = table;
+        table->vikings[i].full = false;
         // initing forks
         table->vikings[i].left_fork->fork_id = i;
         table->vikings[i].right_fork->fork_id = (i + 1) % table->viking_number;

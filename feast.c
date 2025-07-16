@@ -37,11 +37,9 @@ void    *viking_cycle(void *arg)
 int ragnar_monitor(t_table *table, int vikings_number)
 {
     int     i;
-    bool    viking_died;
     int     full_vikings;
 
     // new imp
-    viking_died = false;
     full_vikings = 0;
     while (1337)
     {

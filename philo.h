@@ -70,6 +70,8 @@ typedef struct s_viking
     t_fork      *left_fork;
     t_fork      *right_fork;
     t_table     *table;
+
+    bool full;
 }   t_viking;
 
 // Table object
