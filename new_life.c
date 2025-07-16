@@ -51,7 +51,7 @@ void    viking_eating(t_viking *viking)
     // set number of meals eaten
     increment_meals(viking, 1);
     // sleep time to eat
-    ft_usleep(viking->table->time_to_sleep, viking->table);
+    ft_usleep(viking->table->time_to_eat, viking->table);
     // drop forks.
     pthread_mutex_unlock(&viking->left_fork->fork);
     pthread_mutex_unlock(&viking->right_fork->fork);
