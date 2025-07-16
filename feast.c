@@ -12,64 +12,84 @@ void    join_threads(t_table *table, int viking_nbr)
 void    *viking_cycle(void *arg)
 {
     t_viking *viking;
-    
+
     viking = (t_viking *) arg;
     if (viking->viking_id % 2 == 0)
-        ft_usleep(viking->table->time_to_eat / 10, viking->table);
-    if (viking->table->viking_number == 1)
-    {
-        print_action(viking, "has taken a fork");
-        return (NULL);
-    }
-    while (true)
+        ft_usleep(1, viking->table);
+    // set last meal under a mutex last meal lock
+    write_shared_long(&viking->table->last_meal_lock, &viking->last_meal, get_time(viking->table));
+    while (1337)
     {
         if (end_feast(viking->table))
-            break;
-        viking_eat(viking);
-        if (check_eaten(viking))
-            break;
+            return (NULL);
+        pick_up_forks(viking);
+        viking_eating(viking);
         if (end_feast(viking->table))
-            break;
-        viking_sleep(viking);
+            return (NULL);
+        viking_sleeping(viking);
         if (end_feast(viking->table))
-            break;
-        viking_think(viking);
+            return (NULL);
+        viking_thinking(viking);
     }
     return (NULL);
 }
 
-void    *ragnar_monitor(void *arg)
+int ragnar_monitor(t_table *table, int vikings_number)
 {
-    t_table *table;
     int     i;
+    bool    viking_died;
+    int     full_vikings;
 
-    table = (void *)arg;
-    while (true)
+    // new imp
+    viking_died = false;
+    full_vikings = 0;
+    while (1337)
     {
         i = 0;
-        if (end_feast(table))
-            return (NULL);
-        while(i < check_viking_nbr(table))
+        while (i < vikings_number)
         {
-            if ((get_time(table) - get_last_meal(table, i)) >= table->time_to_die)
+            if (starvation_check(&table->vikings[i]))
             {
                 set_end_flag(table);
                 print_action(&table->vikings[i], "died");
-                return (NULL);
+                return (EXIT_SUCCESS);
             }
+            if (table->nbr_of_meals != -1)
+                finished_meal(&table->vikings[i], &full_vikings, table->nbr_of_meals);
             i++;
         }
-        full_vikings(table);
-        ft_usleep(5, table);
+        if (table->nbr_of_meals != -1 && full_vikings == vikings_number)
+            return (set_end_flag(table), EXIT_SUCCESS);
+        ft_usleep(3, table);
     }
-    return (NULL);
+
+    return (EXIT_SUCCESS);
+    // old imp
+    // table = (void *)arg;
+    // while (true)
+    // {
+    //     i = 0;
+    //     if (end_feast(table))
+    //         return (NULL);
+    //     while(i < check_viking_nbr(table))
+    //     {
+    //         if ((get_time(table) - get_last_meal(table, i)) >= table->time_to_die)
+    //         {
+    //             set_end_flag(table);
+    //             print_action(&table->vikings[i], "died");
+    //             return (NULL);
+    //         }
+    //         i++;
+    //     }
+    //     full_vikings(table);
+    //     ft_usleep(5, table);
+    // }
 }
 
 int valhala_feast(t_table *table)
 {
     int i;
     int j;
-    pthread_t    ragnar;
 
     i = 0;
     int viking_nbr = table->viking_number;
@@ -85,9 +105,8 @@ int valhala_feast(t_table *table)
         }
         i++;
     }
-    if (pthread_create(&ragnar, NULL, ragnar_monitor, table) != 0)
-        return (set_end_flag(table), join_threads(table, viking_nbr), EXIT_FAILURE);
-    pthread_join(ragnar, NULL);
+    // monitor thread is literally the main
+    ragnar_monitor(table, viking_nbr);
     join_threads(table, viking_nbr);
     return (EXIT_SUCCESS);
 }

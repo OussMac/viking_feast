@@ -11,14 +11,14 @@ bool    check_forks(t_viking *viking)
     pthread_mutex_unlock(&viking->table->forks_lock);
     return (false);
 }
-
-static void pick_up_forks(t_viking *viking)
-{
-    pthread_mutex_lock(&viking->left_fork->fork);
-    print_action(viking, "has taken a fork");
-    pthread_mutex_lock(&viking->right_fork->fork);
-    print_action(viking, "has taken a fork");
-}
+// might delete this i have new one.
+// static void pick_up_forks(t_viking *viking)
+// {
+//     pthread_mutex_lock(&viking->left_fork->fork);
+//     print_action(viking, "has taken a fork");
+//     pthread_mutex_lock(&viking->right_fork->fork);
+//     print_action(viking, "has taken a fork");
+// }
 
 static void v_eating(t_viking *viking)
 {
@@ -32,12 +32,12 @@ static void v_eating(t_viking *viking)
     viking->last_meal = get_time(viking->table);
     pthread_mutex_unlock(&viking->table->eat_lock);
 
+    // update meals eaten (only affected by one thread so no need to lock)
+    viking->meals_eaten++;
     
     pthread_mutex_unlock(&viking->left_fork->fork);
     pthread_mutex_unlock(&viking->right_fork->fork);
 
-    // update meals eaten (only affected by one thread so no need to lock)
-    viking->meals_eaten++;
 }
 
 bool    check_eaten(t_viking *viking)

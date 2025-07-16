@@ -10,6 +10,9 @@ void    init_locks(t_table *table)
     table->flags.sleep_flag = false;
     table->flags.forks_flag = false;
     table->flags.full_flag = false;
+    // new imp
+    table->flags.last_meal_flag = false;
+    table->flags.meals_eaten_flag = false;
 }
 
 void    clean_locks(t_table *table)
@@ -30,6 +33,11 @@ void    clean_locks(t_table *table)
         pthread_mutex_destroy(&table->forks_lock);
     if (table->flags.full_flag)
         pthread_mutex_destroy(&table->full_lock);
+    // new imp
+    if (table->flags.last_meal_flag)
+        pthread_mutex_destroy(&table->last_meal_lock);
+    if (table->flags.meals_eaten_flag)
+        pthread_mutex_destroy(&table->meals_eaten_lock);
 }
 
 static void first_block(t_table *table, bool *one_failed)
@@ -51,6 +59,15 @@ static void first_block(t_table *table, bool *one_failed)
 
     if (pthread_mutex_init(&table->write_lock, NULL) == 0)
         table->flags.write_flag = true;
+    else
+        *one_failed = true;
+    // new imp -----------------------------------------------------------
+    if (pthread_mutex_init(&table->last_meal_lock, NULL) == 0)
+        table->flags.last_meal_flag = true;
+    else
+        *one_failed = true;
+    if (pthread_mutex_init(&table->meals_eaten_lock, NULL) == 0)
+        table->flags.meals_eaten_flag = true;
     else
         *one_failed = true;
 }

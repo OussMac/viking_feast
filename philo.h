@@ -9,7 +9,7 @@
 # include <stdbool.h> // for boolean flags
 # include <limits.h> // for overflow check
 
-// text colors
+// Text colors
 # define RED "\e[31m"
 # define GRN "\e[32m"
 # define BLU "\e[34m"
@@ -17,6 +17,11 @@
 # define MGN "\e[35m"
 # define CYN "\e[36m"
 # define RST "\e[97m"
+
+// Actions.
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
 
 // # define gettimeofday(...) -1
 // # define malloc(...) NULL
@@ -32,6 +37,12 @@ typedef struct s_lock_flags
     bool    sleep_flag;
     bool    forks_flag;
     bool    full_flag;
+
+
+    // might delete all above.
+    bool    last_meal_flag;
+    bool    meals_eaten_flag;
+
 }   t_lock_flags;
 
 
@@ -76,16 +87,37 @@ typedef struct s_table
     t_fork  *forks;
     t_viking *vikings;
 
-    pthread_mutex_t print_lock;
-    pthread_mutex_t end_lock;
+    pthread_mutex_t print_lock; // i uste this one.
+    pthread_mutex_t end_lock; // this one too
     pthread_mutex_t eat_lock;
     pthread_mutex_t write_lock;
     pthread_mutex_t nbr_lock;
     pthread_mutex_t sleep_lock;
     pthread_mutex_t forks_lock;
     pthread_mutex_t full_lock;
+
+
+    // might delete all above.
+    pthread_mutex_t last_meal_lock;
+    pthread_mutex_t meals_eaten_lock;
     t_lock_flags    flags;
 } t_table;
+
+// readers and writers
+void write_shared_long(pthread_mutex_t *lock, long *var, long value);
+long read_shared_long(pthread_mutex_t *lock, long *var);
+void write_shared_int(pthread_mutex_t *lock, int *var, int value);
+int read_shared_int(pthread_mutex_t *lock, int *var);
+void write_shared_bool(pthread_mutex_t *lock, bool *var, bool value);
+bool read_shared_bool(pthread_mutex_t *lock, bool *var);
+void    finished_meal(t_viking *viking, int *full_vikings, int nbr_of_meals);
+bool    starvation_check(t_viking *viking);
+
+// new life
+void    pick_up_forks(t_viking *viking);
+void    viking_eating(t_viking *viking);
+void    viking_sleeping(t_viking *viking);
+void    viking_thinking(t_viking *viking);
 
 // parsing and input.
 int     parse_input(int argc, char *argv[], t_table *table);

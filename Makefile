@@ -5,7 +5,8 @@ CC = cc
 NAME = philo
 
 SRC = 	debug_helper.c main.c parse_input.c init_data.c free_data.c feast.c \
-		feast_utils.c viking_eat.c sleep_think.c ragnar.c init_utils.c
+		feast_utils.c viking_eat.c sleep_think.c ragnar.c init_utils.c writers_readers.c \
+		new_life.c
 
 OBJ = $(SRC:.c=.o)
 
