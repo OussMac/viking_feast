@@ -100,7 +100,6 @@ void    finished_meal(t_viking *viking, int *full_vikings, int nbr_of_meals);
 bool    starvation_check(t_viking *viking);
 
 // new life
-void    pick_up_forks(t_viking *viking);
 void    viking_eating(t_viking *viking);
 void    viking_sleeping(t_viking *viking);
 void    viking_thinking(t_viking *viking);

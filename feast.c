@@ -27,9 +27,8 @@ void    *viking_cycle(void *arg)
     write_shared_long(&viking->table->last_meal_lock, &viking->last_meal, get_time(viking->table));
     while (1337)
     {
-        if (end_feast(viking->table))
+        if (viking->full || end_feast(viking->table))
             return (NULL);
-        pick_up_forks(viking);
         viking_eating(viking);
         if (end_feast(viking->table))
             return (NULL);
@@ -56,15 +55,16 @@ int ragnar_monitor(t_table *table, int vikings_number)
             if (starvation_check(&table->vikings[i]))
             {
                 set_end_flag(table);
-                print_action(&table->vikings[i], "died");
-                return (EXIT_SUCCESS);
+                return (print_action(&table->vikings[i], "died"), EXIT_SUCCESS);
             }
             if (table->nbr_of_meals != -1)
+            {
                 finished_meal(&table->vikings[i], &full_vikings, table->nbr_of_meals);
+                if (full_vikings == vikings_number)
+                    return (set_end_flag(table), EXIT_SUCCESS);
+            }
             i++;
         }
-        if (table->nbr_of_meals != -1 && full_vikings == vikings_number)
-            return (set_end_flag(table), EXIT_SUCCESS);
         ft_usleep(3, table);
     }
 

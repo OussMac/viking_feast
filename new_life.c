@@ -34,7 +34,7 @@ static void increment_meals(t_viking *viking, int incr_amount)
     write_shared_int(&viking->table->meals_eaten_lock, &viking->meals_eaten, temp);
 }
 
-void    pick_up_forks(t_viking *viking)
+static void    pick_up_forks(t_viking *viking)
 {
     pthread_mutex_lock(&viking->left_fork->fork);
     print_action(viking, "has taken a fork");
@@ -44,6 +44,7 @@ void    pick_up_forks(t_viking *viking)
 
 void    viking_eating(t_viking *viking)
 {
+    pick_up_forks(viking);
     print_action(viking, EATING);
     // set last meal
     write_shared_long(&viking->table->last_meal_lock, &viking->last_meal, get_time(viking->table));
