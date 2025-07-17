@@ -12,7 +12,6 @@ void    finished_meal(t_viking *viking, int *full_vikings, int nbr_of_meals)
         *full_vikings = *full_vikings + 1;
         viking->full = true;
     }
-    // printf(BLU"==> viking number [%d] --> full vikings = %d\n"RST, viking->viking_id, *full_vikings);
 }
 
 bool    starvation_check(t_viking *viking)

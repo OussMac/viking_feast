@@ -31,15 +31,6 @@ typedef struct s_lock_flags
 {
     bool    print_flag;
     bool    end_flag;
-    bool    eat_flag;
-    bool    write_flag;
-    bool    nbr_flag;
-    bool    sleep_flag;
-    bool    forks_flag;
-    bool    full_flag;
-
-
-    // might delete all above.
     bool    last_meal_flag;
     bool    meals_eaten_flag;
 
@@ -89,17 +80,8 @@ typedef struct s_table
     t_fork  *forks;
     t_viking *vikings;
 
-    pthread_mutex_t print_lock; // i uste this one.
-    pthread_mutex_t end_lock; // this one too
-    pthread_mutex_t eat_lock;
-    pthread_mutex_t write_lock;
-    pthread_mutex_t nbr_lock;
-    pthread_mutex_t sleep_lock;
-    pthread_mutex_t forks_lock;
-    pthread_mutex_t full_lock;
-
-
-    // might delete all above.
+    pthread_mutex_t print_lock;
+    pthread_mutex_t end_lock;
     pthread_mutex_t last_meal_lock;
     pthread_mutex_t meals_eaten_lock;
     t_lock_flags    flags;
@@ -112,6 +94,8 @@ void write_shared_int(pthread_mutex_t *lock, int *var, int value);
 int read_shared_int(pthread_mutex_t *lock, int *var);
 void write_shared_bool(pthread_mutex_t *lock, bool *var, bool value);
 bool read_shared_bool(pthread_mutex_t *lock, bool *var);
+
+// food diagnosis.
 void    finished_meal(t_viking *viking, int *full_vikings, int nbr_of_meals);
 bool    starvation_check(t_viking *viking);
 

@@ -18,7 +18,6 @@ static int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-// gotta change it to use readers and writers.
 void    print_action(t_viking *viking, char *action)
 {
     pthread_mutex_lock(&viking->table->print_lock);
@@ -54,4 +53,11 @@ bool    end_feast(t_table *table)
     }
     pthread_mutex_unlock(&table->end_lock);
     return (false);
+}
+
+void    set_end_flag(t_table *table)
+{
+    pthread_mutex_lock(&table->end_lock);
+    table->end_feast = true;
+    pthread_mutex_unlock(&table->end_lock);
 }
