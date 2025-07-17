@@ -22,7 +22,7 @@ void    *viking_cycle(void *arg)
         return (NULL);
     }
     if (viking->viking_id % 2 == 0)
-        ft_usleep(1, viking->table);
+        ft_usleep(3, viking->table);
     // set last meal under a mutex last meal lock
     write_shared_long(&viking->table->last_meal_lock, &viking->last_meal, get_time(viking->table));
     while (1337)
