@@ -14,6 +14,13 @@ void    *viking_cycle(void *arg)
     t_viking *viking;
 
     viking = (t_viking *) arg;
+    // handle one
+    if (viking->table->viking_number == 1)
+    {
+        pthread_mutex_lock(&viking->left_fork->fork);
+        print_action(viking, "has taken a fork");
+        return (NULL);
+    }
     if (viking->viking_id % 2 == 0)
         ft_usleep(1, viking->table);
     // set last meal under a mutex last meal lock
@@ -62,26 +69,6 @@ int ragnar_monitor(t_table *table, int vikings_number)
     }
 
     return (EXIT_SUCCESS);
-    // old imp
-    // table = (void *)arg;
-    // while (true)
-    // {
-    //     i = 0;
-    //     if (end_feast(table))
-    //         return (NULL);
-    //     while(i < check_viking_nbr(table))
-    //     {
-    //         if ((get_time(table) - get_last_meal(table, i)) >= table->time_to_die)
-    //         {
-    //             set_end_flag(table);
-    //             print_action(&table->vikings[i], "died");
-    //             return (NULL);
-    //         }
-    //         i++;
-    //     }
-    //     full_vikings(table);
-    //     ft_usleep(5, table);
-    // }
 }
 
 int valhala_feast(t_table *table)

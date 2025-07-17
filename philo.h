@@ -143,14 +143,6 @@ void    print_action(t_viking *viking, char *action);
 int     valhala_feast(t_table *table);
 void    *viking_cycle(void *arg);
 
-// Eating.
-void    viking_eat(t_viking *viking);
-bool    check_eaten(t_viking *viking);
-
-// Sleeping && Eeating
-void    viking_sleep(t_viking *viking);
-void    viking_think(t_viking *viking);
-
 // Ragnar utils
 void    set_end_flag(t_table *table);
 void    full_vikings(t_table *table);
